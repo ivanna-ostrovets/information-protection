@@ -1,4 +1,4 @@
-# editorconfig.org
+# Editor configuration, see http://editorconfig.org
 
 root = true
 
@@ -13,3 +13,4 @@ trim_trailing_whitespace = true
 [*.md]
 insert_final_newline = false
 trim_trailing_whitespace = false
+max_line_length = off

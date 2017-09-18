@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
+          crossorigin="anonymous">
+  </head>
+
+  <body>
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="text-center">Information Protection</h1>
+      </div>
+    </div>
+
+    <div class="container">
+      <div id="accordion"
+           role="tablist">
+        <div class="card">
+          <div class="card-header"
+               role="tab"
+               id="headingOne">
+            <h5 class="mb-0">
+              <a class="collapsed"
+                 data-toggle="collapse"
+                 href="#collapseOne"
+                 aria-expanded="false"
+                 aria-controls="collapseOne">
+                Additive Cipher
+              </a>
+            </h5>
+          </div>
+
+          <div id="collapseOne"
+               class="show collapse"
+               role="tabpanel"
+               aria-labelledby="headingOne"
+               data-parent="#accordion">
+            <div class="card-body">
+              <form name="additiveForm">
+                <div class="form-group">
+                  <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                      <input class="form-check-input"
+                             type="radio"
+                             name="cipherMode"
+                             value="encrypt"
+                             checked>
+                      Encrypt
+                    </label>
+                  </div>
+
+                  <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                      <input class="form-check-input"
+                             type="radio"
+                             name="cipherMode"
+                             value="decrypt">
+                      Decrypt
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="additiveKey">Key</label>
+
+                  <input type="number"
+                         class="form-control"
+                         id="additiveKey"
+                         name="key"
+                         min="1"
+                         aria-describedby="Key">
+                </div>
+
+                <div class="form-group">
+                  <label for="additiveInput">Input</label>
+
+                  <input type="text"
+                         class="form-control"
+                         id="additiveInput"
+                         name="input"
+                         aria-describedby="Input">
+                </div>
+
+                <div class="form-group">
+                  <label for="additiveOutput">Output</label>
+
+                  <input type="text"
+                         class="form-control"
+                         id="additiveOutput"
+                         name="output"
+                         aria-describedby="Output"
+                         disabled>
+                </div>
+
+                <button type="button"
+                        class="btn btn-primary"
+                        name="submit">
+                  Submit
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"
+               role="tab"
+               id="headingTwo">
+            <h5 class="mb-0">
+              <a class="collapsed"
+                 data-toggle="collapse"
+                 href="#collapseTwo"
+                 aria-expanded="false"
+                 aria-controls="collapseTwo">
+                Multiplicative Cipher
+              </a>
+            </h5>
+          </div>
+
+          <div id="collapseTwo"
+               class="show collapse"
+               role="tabpanel"
+               aria-labelledby="headingTwo"
+               data-parent="#accordion">
+            <div class="card-body">
+              <form name="multiplicativeForm">
+                <div class="form-group">
+                  <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                      <input class="form-check-input"
+                             type="radio"
+                             name="cipherMode"
+                             value="encrypt"
+                             checked>
+                      Encrypt
+                    </label>
+                  </div>
+
+                  <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                      <input class="form-check-input"
+                             type="radio"
+                             name="cipherMode"
+                             value="decrypt">
+                      Decrypt
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="multiplicativeKey">Key</label>
+
+                  <input type="number"
+                         class="form-control"
+                         id="multiplicativeKey"
+                         name="key"
+                         min="1"
+                         aria-describedby="Key">
+                </div>
+
+                <div class="form-group">
+                  <label for="multiplicativeInput">Input</label>
+
+                  <input type="text"
+                         class="form-control"
+                         id="multiplicativeInput"
+                         name="input"
+                         aria-describedby="Input">
+                </div>
+
+                <div class="form-group">
+                  <label for="multiplicativeOutput">Output</label>
+
+                  <input type="text"
+                         class="form-control"
+                         id="multiplicativeOutput"
+                         name="output"
+                         aria-describedby="Output"
+                         disabled>
+                </div>
+
+                <button type="button"
+                        class="btn btn-primary"
+                        name="submit">
+                  Submit
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"
+               role="tab"
+               id="headingThree">
+            <h5 class="mb-0">
+              <a class="collapsed"
+                 data-toggle="collapse"
+                 href="#collapseThree"
+                 aria-expanded="false"
+                 aria-controls="collapseThree">
+                Affine Cipher
+              </a>
+            </h5>
+          </div>
+
+          <div id="collapseThree"
+               class="show collapse"
+               role="tabpanel"
+               aria-labelledby="headingThree"
+               data-parent="#accordion">
+            <div class="card-body">
+              <form name="affineForm">
+                <div class="form-group">
+                  <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                      <input class="form-check-input"
+                             type="radio"
+                             name="cipherMode"
+                             value="encrypt"
+                             checked>
+                      Encrypt
+                    </label>
+                  </div>
+
+                  <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                      <input class="form-check-input"
+                             type="radio"
+                             name="cipherMode"
+                             value="decrypt">
+                      Decrypt
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="affineKey1">Key #1</label>
+
+                  <input type="number"
+                         class="form-control"
+                         id="affineKey1"
+                         name="key1"
+                         min="1"
+                         aria-describedby="Key #1">
+                </div>
+
+                <div class="form-group">
+                  <label for="affineKey2">Key #2</label>
+
+                  <input type="number"
+                         class="form-control"
+                         id="affineKey2"
+                         name="key2"
+                         min="1"
+                         aria-describedby="Key #2">
+                </div>
+
+                <div class="form-group">
+                  <label for="affineInput">Input</label>
+
+                  <input type="text"
+                         class="form-control"
+                         id="affineInput"
+                         name="input"
+                         aria-describedby="Input">
+                </div>
+
+                <div class="form-group">
+                  <label for="affineOutput">Output</label>
+
+                  <input type="text"
+                         class="form-control"
+                         id="affineOutput"
+                         name="output"
+                         aria-describedby="Output">
+                </div>
+
+                <button type="button"
+                        class="btn btn-primary"
+                        name="submit">
+                  Submit
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+            integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+            crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
+            integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+            crossorigin="anonymous">
+    </script>
+    <script src="lab1.js"></script>
+  </body>
+</html>

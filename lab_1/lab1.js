@@ -9,26 +9,56 @@
   let affineForm = document.affineForm;
 
   function init() {
+    document.getElementById('accordionOneOutput').style.display = 'none';
+    document.getElementById('accordionTwoOutput').style.display = 'none';
+    document.getElementById('accordionThreeOutput').style.display = 'none';
+
     additiveForm.input.value = DEFAULT_INPUT;
     additiveForm.key.value = DEFAULT_KEY;
     additiveForm.submit.addEventListener('click', () => {
       additiveForm.output.value = getCryptographerOutput(
-        additiveForm,
+        parseInt(additiveForm.key.value),
+        additiveForm.input.value,
+        additiveForm.cipherMode.value,
         additive_cipher_encrypt,
         additive_cipher_decrypt
       );
+
+      if (additiveForm.cipherMode.value === 'decrypt') {
+        document.getElementById('accordionOneOutput').style.display = 'block';
+
+        decryptWithoutKey(
+          'outputListOne',
+          additiveForm,
+          additive_cipher_encrypt,
+          additive_cipher_decrypt
+        );
+      }
     });
 
     multiplicativeForm.input.value = DEFAULT_INPUT;
     multiplicativeForm.key.value = DEFAULT_KEY + 3;
     multiplicativeForm.submit.addEventListener('click', () => {
       const result = getCryptographerOutput(
-        multiplicativeForm,
+        parseInt(multiplicativeForm.key.value),
+        multiplicativeForm.input.value,
+        multiplicativeForm.cipherMode.value,
         multiplicative_cipher_encrypt,
         multiplicative_cipher_decrypt
       );
 
       multiplicativeForm.output.value = result ? result : '';
+
+      if (multiplicativeForm.cipherMode.value === 'decrypt') {
+        document.getElementById('accordionTwoOutput').style.display = 'block';
+
+        decryptWithoutKey(
+          'outputListTwo',
+          multiplicativeForm,
+          multiplicative_cipher_encrypt,
+          multiplicative_cipher_decrypt
+        );
+      }
     });
 
     affineForm.input.value = DEFAULT_INPUT;
@@ -36,25 +66,70 @@
     affineForm.key2.value = DEFAULT_KEY + 3;
     affineForm.submit.addEventListener('click', () => {
       const result = getCryptographerOutput(
-        affineForm,
+        parseInt(affineForm.key1.value),
+        affineForm.input.value,
+        affineForm.cipherMode.value,
         affine_cipher_encrypt,
-        affine_cipher_decrypt
+        affine_cipher_decrypt,
+        parseInt(affineForm.key2.value)
       );
 
       affineForm.output.value = result ? result : '';
+
+      if (affineForm.cipherMode.value === 'decrypt') {
+        document.getElementById('accordionThreeOutput').style.display = 'block';
+
+        decryptWithoutKey(
+          'outputListThree',
+          affineForm,
+          affine_cipher_encrypt,
+          affine_cipher_decrypt
+        );
+      }
     });
   }
 
-  function getCryptographerOutput(form, encryptFunc, decryptFunc) {
-    if (form.name === "affineForm") {
-      return form.cipherMode.value === 'encrypt'
-        ? encryptFunc(parseInt(form.key1.value), parseInt(form.key2.value), form.input.value)
-        : decryptFunc(parseInt(form.key1.value), parseInt(form.key2.value), form.input.value);
+  function decryptWithoutKey(resultDivId, form, encryptFunc, decryptFunc) {
+    let output = document.getElementById(resultDivId);
+
+    while (output.hasChildNodes()) {
+      output.removeChild(output.lastChild);
     }
 
-    return form.cipherMode.value === 'encrypt'
-      ? encryptFunc(parseInt(form.key.value), form.input.value)
-      : decryptFunc(parseInt(form.key.value), form.input.value);
+    for (let i = 1; i < 12; i++) {
+      const div = document.createElement('div');
+      const result = form.name === 'affineForm'
+        ? getCryptographerOutput(
+          i,
+          form.input.value,
+          form.cipherMode.value,
+          encryptFunc,
+          decryptFunc,
+          i
+        )
+        : getCryptographerOutput(
+          i,
+          form.input.value,
+          form.cipherMode.value,
+          encryptFunc,
+          decryptFunc
+        );
+
+      div.appendChild(document.createTextNode(`Key: ${i} - ${result ? result : 'This key can\'t be used for cipher method!'}`));
+      output.appendChild(div);
+    }
+  }
+
+  function getCryptographerOutput(key1, message, cipherMode, encryptFunc, decryptFunc, key2=null) {
+    if (key2) {
+      return cipherMode === 'encrypt'
+        ? encryptFunc(key1, key2, message)
+        : decryptFunc(key1, key2, message);
+    }
+
+    return cipherMode === 'encrypt'
+      ? encryptFunc(key1, message)
+      : decryptFunc(key1, message);
   }
 
   function additive_cipher_encrypt(key, message) {

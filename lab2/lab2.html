@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
+          crossorigin="anonymous">
+  </head>
+
+  <body>
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="text-center">Information Protection</h1>
+      </div>
+    </div>
+
+    <div class="container">
+      <div id="accordion"
+           role="tablist">
+        <div class="card">
+          <div class="card-header"
+               role="tab"
+               id="headingOne">
+            <h5 class="mb-0">
+              <a class="collapsed"
+                 data-toggle="collapse"
+                 href="#collapseOne"
+                 aria-expanded="false"
+                 aria-controls="collapseOne">
+                Playfair cipher
+              </a>
+            </h5>
+          </div>
+
+          <div id="collapseOne"
+               class="show collapse"
+               role="tabpanel"
+               aria-labelledby="headingOne"
+               data-parent="#accordion">
+            <div class="card-body">
+              <form name="playfairForm">
+                <div class="form-group">
+                  <label for="playfairInput">Input</label>
+
+                  <input type="text"
+                         class="form-control"
+                         id="playfairInput"
+                         name="input"
+                         aria-describedby="Input">
+                </div>
+
+                <div class="form-group">
+                  <label for="playfairOutput">Output</label>
+
+                  <input type="text"
+                         class="form-control"
+                         id="playfairOutput"
+                         name="output"
+                         aria-describedby="Output"
+                         disabled>
+                </div>
+
+                <button type="button"
+                        class="btn btn-primary"
+                        name="submit">
+                  Submit
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"
+               role="tab"
+               id="headingTwo">
+            <h5 class="mb-0">
+              <a class="collapsed"
+                 data-toggle="collapse"
+                 href="#collapseTwo"
+                 aria-expanded="false"
+                 aria-controls="collapseTwo">
+                Two-square cipher
+              </a>
+            </h5>
+          </div>
+
+          <div id="collapseTwo"
+               class="show collapse"
+               role="tabpanel"
+               aria-labelledby="headingTwo"
+               data-parent="#accordion">
+            <div class="card-body">
+              <form name="twoSquareForm">
+                <div class="form-group">
+                  <label for="twoSquareInput">Input</label>
+
+                  <input type="text"
+                         class="form-control"
+                         id="twoSquareInput"
+                         name="input"
+                         aria-describedby="Input">
+                </div>
+
+                <div class="form-group">
+                  <label for="twoSquareOutput">Output</label>
+
+                  <input type="text"
+                         class="form-control"
+                         id="twoSquareOutput"
+                         name="output"
+                         aria-describedby="Output"
+                         disabled>
+                </div>
+
+                <button type="button"
+                        class="btn btn-primary"
+                        name="submit">
+                  Submit
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+            integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+            crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
+            integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+            crossorigin="anonymous">
+    </script>
+    <script src="lab2.js"></script>
+  </body>
+</html>

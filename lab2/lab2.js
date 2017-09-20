@@ -31,7 +31,7 @@
   function init() {
     playfairForm.input.value = 'hello';
     playfairForm.submit.addEventListener('click', () => {
-      playfairForm.output.value = playfairCipher(playfairForm.input.value);
+      playfairForm.output.value = playfairCipher(playfairForm.cipherMode.value, playfairForm.input.value);
     });
 
     twoSquareForm.input.value = 'нехай консули будуть уважні';
@@ -40,11 +40,10 @@
     });
   }
 
-  function playfairCipher(message) {
+  function playfairCipher(cipherMode, message) {
     message = message.toUpperCase();
     message = message.replace('J', 'I');
     let newMessage = [];
-    let output = [];
 
     for (let i = 0; i < message.length; i += 2) {
       newMessage.push(message[i]);
@@ -62,9 +61,17 @@
       newMessage.push('X');
     }
 
-    for (let i = 0; i < newMessage.length; i += 2) {
-      const index1 = twoDimensionalIndexOf(newMessage[i]);
-      const index2 = twoDimensionalIndexOf(newMessage[i+1]);
+    return cipherMode === 'encrypt'
+      ? playfairCipherEncrypt(newMessage)
+      : playfairCipherDencrypt(newMessage);
+  }
+
+  function playfairCipherEncrypt(message) {
+    let output = [];
+
+    for (let i = 0; i < message.length; i += 2) {
+      const index1 = twoDimensionalIndexOf(message[i]);
+      const index2 = twoDimensionalIndexOf(message[i+1]);
 
       if (index1[0] === index2[0]) {
         output.push(PLAYFAIR_KEY[index1[0]][(index1[1] + 1) % PLAYFAIR_KEY[0].length]);
@@ -79,6 +86,28 @@
     }
 
     return output.join('');
+  }
+
+  function playfairCipherDencrypt(message) {
+    let output = [];
+
+    for (let i = 0; i < message.length; i += 2) {
+      const index1 = twoDimensionalIndexOf(message[i]);
+      const index2 = twoDimensionalIndexOf(message[i+1]);
+
+      if (index1[0] === index2[0]) {
+        output.push(PLAYFAIR_KEY[index1[0]][(PLAYFAIR_KEY[0].length + index1[1] - 1) % PLAYFAIR_KEY[0].length]);
+        output.push(PLAYFAIR_KEY[index2[0]][(PLAYFAIR_KEY[0].length + index2[1] - 1) % PLAYFAIR_KEY[0].length]);
+      } else if (index1[1] === index2[1]) {
+        output.push(PLAYFAIR_KEY[(PLAYFAIR_KEY.length + index1[0] - 1) % PLAYFAIR_KEY.length][index1[1]]);
+        output.push(PLAYFAIR_KEY[(PLAYFAIR_KEY.length + index2[0] - 1) % PLAYFAIR_KEY.length][index2[1]]);
+      } else {
+        output.push(PLAYFAIR_KEY[index1[0]][index2[1]]);
+        output.push(PLAYFAIR_KEY[index2[0]][index1[1]]);
+      }
+    }
+
+    return output.join('').replace('X', '');
   }
 
   function twoDimensionalIndexOf(string) {

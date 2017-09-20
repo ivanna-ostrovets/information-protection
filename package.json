@@ -1,0 +1,13 @@
+{
+  "name": "information-protection",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "serve": "live-server --port=5000"
+  },
+  "author": "Ivanna Ostrovets <ivanna.ostrovets@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.0"
+  }
+}

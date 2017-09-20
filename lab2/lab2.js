@@ -42,6 +42,7 @@
 
   function playfairCipher(message) {
     message = message.toUpperCase();
+    message = message.replace('J', 'I');
     let newMessage = [];
     let output = [];
 
@@ -49,10 +50,16 @@
       newMessage.push(message[i]);
 
       if (message[i] === message[i+1]) {
-        newMessage.push(PLAYFAIR_KEY[Math.floor(Math.random() * 5)][Math.floor(Math.random() * 5)]);
+        newMessage.push('X');
       }
 
-      newMessage.push(message[i+1]);
+      if (i !== message.length - 1) {
+        newMessage.push(message[i+1]);
+      }
+    }
+
+    if (newMessage.length % 2 !== 0) {
+      newMessage.push('X');
     }
 
     for (let i = 0; i < newMessage.length; i += 2) {
@@ -60,9 +67,18 @@
       const index2 = twoDimensionalIndexOf(newMessage[i+1]);
 
       if (index1[0] === index2[0]) {
-        output.push();
+        output.push(PLAYFAIR_KEY[index1[0]][(index1[1] + 1) % PLAYFAIR_KEY[0].length]);
+        output.push(PLAYFAIR_KEY[index2[0]][(index2[1] + 1) % PLAYFAIR_KEY[0].length]);
+      } else if (index1[1] === index2[1]) {
+        output.push(PLAYFAIR_KEY[(index1[0] + 1) % PLAYFAIR_KEY.length][index1[1]]);
+        output.push(PLAYFAIR_KEY[(index2[0] + 1) % PLAYFAIR_KEY.length][index2[1]]);
+      } else {
+        output.push(PLAYFAIR_KEY[index1[0]][index2[1]]);
+        output.push(PLAYFAIR_KEY[index2[0]][index1[1]]);
       }
     }
+
+    return output.join('');
   }
 
   function twoDimensionalIndexOf(string) {
@@ -76,4 +92,4 @@
   }
 
   init();
-})()
+})();

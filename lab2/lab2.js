@@ -42,8 +42,16 @@
 
   function playfairCipher(cipherMode, message) {
     message = message.toUpperCase();
-    message = message.replace('J', 'I');
+
+    return cipherMode === 'encrypt'
+      ? playfairCipherEncrypt(message)
+      : playfairCipherDencrypt(message);
+  }
+
+  function playfairCipherEncrypt(message) {
+    message = message.replace(/J/g, 'I');
     let newMessage = [];
+    let output = [];
 
     for (let i = 0; i < message.length; i += 2) {
       newMessage.push(message[i]);
@@ -61,17 +69,9 @@
       newMessage.push('X');
     }
 
-    return cipherMode === 'encrypt'
-      ? playfairCipherEncrypt(newMessage)
-      : playfairCipherDencrypt(newMessage);
-  }
-
-  function playfairCipherEncrypt(message) {
-    let output = [];
-
-    for (let i = 0; i < message.length; i += 2) {
-      const index1 = twoDimensionalIndexOf(message[i]);
-      const index2 = twoDimensionalIndexOf(message[i+1]);
+    for (let i = 0; i < newMessage.length; i += 2) {
+      const index1 = twoDimensionalIndexOf(newMessage[i]);
+      const index2 = twoDimensionalIndexOf(newMessage[i+1]);
 
       if (index1[0] === index2[0]) {
         output.push(PLAYFAIR_KEY[index1[0]][(index1[1] + 1) % PLAYFAIR_KEY[0].length]);
@@ -107,7 +107,7 @@
       }
     }
 
-    return output.join('').replace('X', '');
+    return output.join('').replace(/X/g, '');
   }
 
   function twoDimensionalIndexOf(string) {

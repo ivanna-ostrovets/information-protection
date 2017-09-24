@@ -5,7 +5,6 @@
   let vigenereForm = document.vigenereForm;
 
   function init() {
-    console.log(VIGENERE_TABLE);
     vigenereForm.input.value = 'Захист інформації';
     vigenereForm.key.value = 'Мова';
 
@@ -69,18 +68,18 @@
     return output.join('');
   }
 
-  function getVigenereTable(alph) {
+  function getVigenereTable(alphabet) {
     let table = [];
 
-    for (let i = 0; i < alph.length; i++) {
+    for (let i = 0; i < alphabet.length; i++) {
       table.push([]);
 
-      for (let j = alph.length - i; j < alph.length; j++) {
-        table[i].push(alph[j]);
+      for (let j = alphabet.length - i; j < alphabet.length; j++) {
+        table[i].push(alphabet[j]);
       }
 
-      for (let j = 0; j < alph.length - i; j++) {
-        table[i].push(alph[j]);
+      for (let j = 0; j < alphabet.length - i; j++) {
+        table[i].push(alphabet[j]);
       }
     }
 

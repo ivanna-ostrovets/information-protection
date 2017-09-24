@@ -7,7 +7,7 @@
     ['Z', 'Y', 'W', 'T', 'P'],
   ];
   const TWO_SQUARE_KEY_1 = [
-    ['Ч', '', 'В', 'І', 'П'],
+    ['Ч', ' ', 'В', 'І', 'П'],
     ['О', 'К', 'Й', 'Д', 'У'],
     ['Г', 'Ш', 'З', 'Є', 'Ф'],
     ['Л', 'Ї', 'Х', 'А', ','],
@@ -19,7 +19,7 @@
     ['Е', 'Л', 'Ц', 'Й', 'П'],
     ['.', 'Х', 'Ї', 'А', 'Н'],
     ['Ш', 'Д', 'Є', 'К', 'С'],
-    ['І', '', 'Б', 'Ф', 'У'],
+    ['І', ' ', 'Б', 'Ф', 'У'],
     ['Я', 'Т', 'И', 'Ч', 'Г'],
     ['М', 'О', ',', 'Ж', 'Ь'],
     ['В', 'Щ', 'З', 'Ю', 'Р'],
@@ -34,9 +34,9 @@
       playfairForm.output.value = playfairCipher(playfairForm.cipherMode.value, playfairForm.input.value);
     });
 
-    twoSquareForm.input.value = 'нехай консули будуть уважні';
+    twoSquareForm.input.value = 'приїжджаю шостого';
     twoSquareForm.submit.addEventListener('click', () => {
-      // twoSquareForm.output.value = ;
+      twoSquareForm.output.value = twoSquareCipher(twoSquareForm.cipherMode.value, twoSquareForm.input.value);
     });
   }
 
@@ -49,7 +49,6 @@
   }
 
   function playfairCipherEncrypt(message) {
-    message = message.replace(/J/g, 'I');
     let newMessage = [];
     let output = [];
 
@@ -70,8 +69,8 @@
     }
 
     for (let i = 0; i < newMessage.length; i += 2) {
-      const index1 = twoDimensionalIndexOf(newMessage[i]);
-      const index2 = twoDimensionalIndexOf(newMessage[i+1]);
+      const index1 = twoDimensionalIndexOf(newMessage[i], PLAYFAIR_KEY);
+      const index2 = twoDimensionalIndexOf(newMessage[i+1], PLAYFAIR_KEY);
 
       if (index1[0] === index2[0]) {
         output.push(PLAYFAIR_KEY[index1[0]][(index1[1] + 1) % PLAYFAIR_KEY[0].length]);
@@ -92,8 +91,8 @@
     let output = [];
 
     for (let i = 0; i < message.length; i += 2) {
-      const index1 = twoDimensionalIndexOf(message[i]);
-      const index2 = twoDimensionalIndexOf(message[i+1]);
+      const index1 = twoDimensionalIndexOf(message[i], PLAYFAIR_KEY);
+      const index2 = twoDimensionalIndexOf(message[i+1], PLAYFAIR_KEY);
 
       if (index1[0] === index2[0]) {
         output.push(PLAYFAIR_KEY[index1[0]][(PLAYFAIR_KEY[0].length + index1[1] - 1) % PLAYFAIR_KEY[0].length]);
@@ -110,9 +109,49 @@
     return output.join('').replace(/X/g, '');
   }
 
-  function twoDimensionalIndexOf(string) {
-    for (let i = 0; i < PLAYFAIR_KEY.length; i++) {
-      const index = PLAYFAIR_KEY[i].indexOf(string);
+  function twoSquareCipher(cipherMode, message) {
+    message = message.toUpperCase();
+
+    return cipherMode === 'encrypt'
+      ? twoSquareCipherEncrypt(message)
+      : twoSquareCipherDencrypt(message);
+  }
+
+  function twoSquareCipherEncrypt(message) {
+    let output = [];
+
+    if (message.length % 2 !== 0) {
+      message += ' ';
+    }
+
+    for (let i = 0; i < message.length; i += 2) {
+      const index1 = twoDimensionalIndexOf(message[i], TWO_SQUARE_KEY_1);
+      const index2 = twoDimensionalIndexOf(message[i+1], TWO_SQUARE_KEY_2);
+
+      output.push(TWO_SQUARE_KEY_2[index1[0]][index2[1]]);
+      output.push(TWO_SQUARE_KEY_1[index2[0]][index1[1]]);
+    }
+
+    return output.join('');
+  }
+
+  function twoSquareCipherDencrypt(message) {
+    let output = [];
+
+    for (let i = 0; i < message.length; i += 2) {
+      const index1 = twoDimensionalIndexOf(message[i], TWO_SQUARE_KEY_2);
+      const index2 = twoDimensionalIndexOf(message[i+1], TWO_SQUARE_KEY_1);
+
+      output.push(TWO_SQUARE_KEY_1[index1[0]][index2[1]]);
+      output.push(TWO_SQUARE_KEY_2[index2[0]][index1[1]]);
+    }
+
+    return output.join('');
+  }
+
+  function twoDimensionalIndexOf(string, array) {
+    for (let i = 0; i < array.length; i++) {
+      const index = array[i].indexOf(string);
 
       if (index > -1) {
         return [i, index];

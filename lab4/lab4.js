@@ -3,7 +3,6 @@
 
   function init() {
     transpositionForm.input.value = 'enemyattackstonight';
-    // transpositionForm.input.value = 'consolelog';
     transpositionForm.key.value = '31452';
 
     transpositionForm.submit.addEventListener('click', () => {
@@ -18,8 +17,6 @@
   function transpositionCipher(cipherMode, key, message) {
     key = key.split('').map(number => parseInt(number) - 1);
 
-    message = message.map((letter, index) => index > 0 && index % key.length === 0 ? letter + ',' : letter);
-
     while (message.length % 5 !== 0) {
       message += 'z';
     }
@@ -30,57 +27,41 @@
   }
 
   function transpositionCipherEncrypt(key, message) {
-    let temp = [];
-    let output = [];
+    message = _.words(message, RegExp(`.{${key.length}}`, 'g'))
+      .map(string => string.split(''));
 
-    for (let i = 0; i < message.length; i += 5) {
+    for (let i = 0; i < message.length; i++) {
+      const temp = [];
+
       for (let j = 0; j < key.length; j++) {
-        temp.push(message[i + key[j]]);
+        temp.push(message[i][key[j]]);
       }
+
+      message[i] = temp;
     }
 
-    const transpos = temp[0].map(function(col, i) {
-      return temp.map(function(row) {
-        return row[i];
-      });
-    });
+    message = _.zip.apply(_, message);
 
-    return transpos.join('');
+    return message.map(row => row.join('')).join('');
   }
 
   function transpositionCipherDencrypt(key, message) {
-    let temp = [];
-    let output = [];
-    const it = iterator(message);
-    const colunmLengthSquared = (message.length / key.length) ** 2;
+    message = _.words(message, RegExp(`.{${message.length / key.length}}`, 'g'))
+      .map(string => string.split(''));
 
-    for (let i = 0; i < key.length; i++) {
-      for (let j = 0; j <= colunmLengthSquared; j += 5) {
-        temp[i + j] = it.next().value;
-      }
-    }
+    message = _.zip.apply(_, message);
 
-    const tempIterator = iterator(temp);
+    for (let i = 0; i < message.length; i++) {
+      const temp = [];
 
-    for (let i = 0; i < message.length; i += 5) {
       for (let j = 0; j < key.length; j++) {
-        output[i + key[j]] = tempIterator.next().value;
+        temp[key[j]] = message[i][j];
       }
+
+      message[i] = temp;
     }
 
-    return output.join('');
-  }
-
-  function iterator(array) {
-    let nextIndex = 0;
-
-    return {
-      next: function() {
-        return nextIndex < array.length ?
-          { value: array[nextIndex++], done: false } :
-          { done: true };
-      }
-    };
+    return message.map(row => row.join('')).join('');
   }
 
   init();

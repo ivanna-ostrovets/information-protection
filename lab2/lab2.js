@@ -114,11 +114,11 @@
     message = message.toUpperCase();
 
     return cipherMode === 'encrypt'
-      ? doubleSquareCipherEncrypt(message)
+      ? doubleSquareCipherEncrypt(message, DOUBLE_SQUARE_KEY_1, DOUBLE_SQUARE_KEY_2)
       : doubleSquareCipherDencrypt(message);
   }
 
-  function doubleSquareCipherEncrypt(message) {
+  function doubleSquareCipherEncrypt(message, key1, key2) {
     let output = [];
 
     if (message.length % 2 !== 0) {
@@ -126,28 +126,18 @@
     }
 
     for (let i = 0; i < message.length; i += 2) {
-      const index1 = twoDimensionalIndexOf(message[i], DOUBLE_SQUARE_KEY_1);
-      const index2 = twoDimensionalIndexOf(message[i+1], DOUBLE_SQUARE_KEY_2);
+      const index1 = twoDimensionalIndexOf(message[i], key1);
+      const index2 = twoDimensionalIndexOf(message[i+1], key2);
 
-      output.push(DOUBLE_SQUARE_KEY_2[index1[0]][index2[1]]);
-      output.push(DOUBLE_SQUARE_KEY_1[index2[0]][index1[1]]);
+      output.push(key2[index1[0]][index2[1]]);
+      output.push(key1[index2[0]][index1[1]]);
     }
 
     return output.join('');
   }
 
   function doubleSquareCipherDencrypt(message) {
-    let output = [];
-
-    for (let i = 0; i < message.length; i += 2) {
-      const index1 = twoDimensionalIndexOf(message[i], DOUBLE_SQUARE_KEY_2);
-      const index2 = twoDimensionalIndexOf(message[i+1], DOUBLE_SQUARE_KEY_1);
-
-      output.push(DOUBLE_SQUARE_KEY_1[index1[0]][index2[1]]);
-      output.push(DOUBLE_SQUARE_KEY_2[index2[0]][index1[1]]);
-    }
-
-    return output.join('');
+    return doubleSquareCipherEncrypt(message, DOUBLE_SQUARE_KEY_2, DOUBLE_SQUARE_KEY_1);
   }
 
   function twoDimensionalIndexOf(string, array) {

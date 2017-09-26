@@ -17,19 +17,11 @@
 
   function transpositionCipher(cipherMode, key, message) {
     key = key.split('').map(number => parseInt(number) - 1);
-    const newMessage = [];
-    const rowsNumber = message.length / ;
+
+    message = message.map((letter, index) => index > 0 && index % key.length === 0 ? letter + ',' : letter);
 
     while (message.length % 5 !== 0) {
       message += 'z';
-    }
-
-    for (let i = 0; i < message.length; i++) {
-      newMessage.push([]);
-
-      for (let j = 0; j < key.length; j++) {
-        newMessage[i].push();
-      }
     }
 
     return cipherMode === 'encrypt'

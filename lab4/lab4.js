@@ -2,8 +2,8 @@
   let transpositionForm = document.transpositionForm;
 
   function init() {
-    // transpositionForm.input.value = 'enemyattackstonight';
-    transpositionForm.input.value = 'ettheakimaotycnzntsg';
+    transpositionForm.input.value = 'enemyattackstonight';
+    // transpositionForm.input.value = 'consolelog';
     transpositionForm.key.value = '31452';
 
     transpositionForm.submit.addEventListener('click', () => {
@@ -17,9 +17,19 @@
 
   function transpositionCipher(cipherMode, key, message) {
     key = key.split('').map(number => parseInt(number) - 1);
+    const newMessage = [];
+    const rowsNumber = message.length / ;
 
     while (message.length % 5 !== 0) {
       message += 'z';
+    }
+
+    for (let i = 0; i < message.length; i++) {
+      newMessage.push([]);
+
+      for (let j = 0; j < key.length; j++) {
+        newMessage[i].push();
+      }
     }
 
     return cipherMode === 'encrypt'
@@ -30,8 +40,6 @@
   function transpositionCipherEncrypt(key, message) {
     let temp = [];
     let output = [];
-    const colunmLength = message.length / key.length;
-    const colunmLengthSquared = colunmLength * colunmLength;
 
     for (let i = 0; i < message.length; i += 5) {
       for (let j = 0; j < key.length; j++) {
@@ -39,15 +47,13 @@
       }
     }
 
-    const it = iterator(temp);
+    const transpos = temp[0].map(function(col, i) {
+      return temp.map(function(row) {
+        return row[i];
+      });
+    });
 
-    for (let i = 0; i < colunmLength; i++) {
-      for (let j = 0; j <= colunmLengthSquared; j += 4) {
-        output[i + j] = it.next().value;
-      }
-    }
-
-    return output.join('');
+    return transpos.join('');
   }
 
   function transpositionCipherDencrypt(key, message) {
@@ -62,10 +68,11 @@
       }
     }
 
+    const tempIterator = iterator(temp);
+
     for (let i = 0; i < message.length; i += 5) {
       for (let j = 0; j < key.length; j++) {
-        console.log(i + key[j], message[i + key[j]]);
-        output.push(message[i + key[j]]);
+        output[i + key[j]] = tempIterator.next().value;
       }
     }
 

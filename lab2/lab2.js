@@ -6,7 +6,7 @@
     ['X', 'V', 'S', 'O', 'K'],
     ['Z', 'Y', 'W', 'T', 'P'],
   ];
-  const TWO_SQUARE_KEY_1 = [
+  const DOUBLE_SQUARE_KEY_1 = [
     ['Ч', ' ', 'В', 'І', 'П'],
     ['О', 'К', 'Й', 'Д', 'У'],
     ['Г', 'Ш', 'З', 'Є', 'Ф'],
@@ -15,7 +15,7 @@
     ['Ц', 'Б', 'И', 'Т', 'Ь'],
     ['.', 'С', 'Я', 'Ь', 'Е'],
   ];
-  const TWO_SQUARE_KEY_2 = [
+  const DOUBLE_SQUARE_KEY_2 = [
     ['Е', 'Л', 'Ц', 'Й', 'П'],
     ['.', 'Х', 'Ї', 'А', 'Н'],
     ['Ш', 'Д', 'Є', 'К', 'С'],
@@ -24,9 +24,10 @@
     ['М', 'О', ',', 'Ж', 'Ь'],
     ['В', 'Щ', 'З', 'Ю', 'Р'],
   ];
+  const PLAYFAIR_SYMBOL = 'X';
 
   let playfairForm = document.playfairForm;
-  let twoSquareForm = document.twoSquareForm;
+  let doubleSquareForm = document.doubleSquareForm;
 
   function init() {
     playfairForm.input.value = 'hello';
@@ -34,9 +35,9 @@
       playfairForm.output.value = playfairCipher(playfairForm.cipherMode.value, playfairForm.input.value);
     });
 
-    twoSquareForm.input.value = 'приїжджаю шостого';
-    twoSquareForm.submit.addEventListener('click', () => {
-      twoSquareForm.output.value = twoSquareCipher(twoSquareForm.cipherMode.value, twoSquareForm.input.value);
+    doubleSquareForm.input.value = 'приїжджаю шостого';
+    doubleSquareForm.submit.addEventListener('click', () => {
+      doubleSquareForm.output.value = doubleSquareCipher(doubleSquareForm.cipherMode.value, doubleSquareForm.input.value);
     });
   }
 
@@ -56,7 +57,7 @@
       newMessage.push(message[i]);
 
       if (message[i] === message[i+1]) {
-        newMessage.push('X');
+        newMessage.push(PLAYFAIR_SYMBOL);
       }
 
       if (i !== message.length - 1) {
@@ -65,7 +66,7 @@
     }
 
     if (newMessage.length % 2 !== 0) {
-      newMessage.push('X');
+      newMessage.push(PLAYFAIR_SYMBOL);
     }
 
     for (let i = 0; i < newMessage.length; i += 2) {
@@ -106,18 +107,18 @@
       }
     }
 
-    return output.join('').replace(/X/g, '');
+    return output.join('').replace(RegExp(PLAYFAIR_SYMBOL, 'g'), '');
   }
 
-  function twoSquareCipher(cipherMode, message) {
+  function doubleSquareCipher(cipherMode, message) {
     message = message.toUpperCase();
 
     return cipherMode === 'encrypt'
-      ? twoSquareCipherEncrypt(message)
-      : twoSquareCipherDencrypt(message);
+      ? doubleSquareCipherEncrypt(message)
+      : doubleSquareCipherDencrypt(message);
   }
 
-  function twoSquareCipherEncrypt(message) {
+  function doubleSquareCipherEncrypt(message) {
     let output = [];
 
     if (message.length % 2 !== 0) {
@@ -125,25 +126,25 @@
     }
 
     for (let i = 0; i < message.length; i += 2) {
-      const index1 = twoDimensionalIndexOf(message[i], TWO_SQUARE_KEY_1);
-      const index2 = twoDimensionalIndexOf(message[i+1], TWO_SQUARE_KEY_2);
+      const index1 = twoDimensionalIndexOf(message[i], DOUBLE_SQUARE_KEY_1);
+      const index2 = twoDimensionalIndexOf(message[i+1], DOUBLE_SQUARE_KEY_2);
 
-      output.push(TWO_SQUARE_KEY_2[index1[0]][index2[1]]);
-      output.push(TWO_SQUARE_KEY_1[index2[0]][index1[1]]);
+      output.push(DOUBLE_SQUARE_KEY_2[index1[0]][index2[1]]);
+      output.push(DOUBLE_SQUARE_KEY_1[index2[0]][index1[1]]);
     }
 
     return output.join('');
   }
 
-  function twoSquareCipherDencrypt(message) {
+  function doubleSquareCipherDencrypt(message) {
     let output = [];
 
     for (let i = 0; i < message.length; i += 2) {
-      const index1 = twoDimensionalIndexOf(message[i], TWO_SQUARE_KEY_2);
-      const index2 = twoDimensionalIndexOf(message[i+1], TWO_SQUARE_KEY_1);
+      const index1 = twoDimensionalIndexOf(message[i], DOUBLE_SQUARE_KEY_2);
+      const index2 = twoDimensionalIndexOf(message[i+1], DOUBLE_SQUARE_KEY_1);
 
-      output.push(TWO_SQUARE_KEY_1[index1[0]][index2[1]]);
-      output.push(TWO_SQUARE_KEY_2[index2[0]][index1[1]]);
+      output.push(DOUBLE_SQUARE_KEY_1[index1[0]][index2[1]]);
+      output.push(DOUBLE_SQUARE_KEY_2[index2[0]][index1[1]]);
     }
 
     return output.join('');

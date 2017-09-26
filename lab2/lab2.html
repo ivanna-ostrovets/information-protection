@@ -33,7 +33,7 @@
     </div>
 
     <div class="container">
-      <div id="accordion"
+      <div id="accordionOne"
            role="tablist">
         <div class="card">
           <div class="card-header"
@@ -54,7 +54,7 @@
                class="show collapse"
                role="tabpanel"
                aria-labelledby="headingOne"
-               data-parent="#accordion">
+               data-parent="#accordionOne">
             <div class="card-body">
               <form name="playfairForm">
                 <div class="form-group">
@@ -110,7 +110,10 @@
             </div>
           </div>
         </div>
+      </div>
 
+      <div id="accordionTwo"
+           role="tablist">
         <div class="card">
           <div class="card-header"
                role="tab"
@@ -130,9 +133,9 @@
                class="show collapse"
                role="tabpanel"
                aria-labelledby="headingTwo"
-               data-parent="#accordion">
+               data-parent="#accordionTwo">
             <div class="card-body">
-              <form name="twoSquareForm">
+              <form name="doubleSquareForm">
                 <div class="form-group">
                   <div class="form-check form-check-inline">
                     <label class="form-check-label">
@@ -157,21 +160,21 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="twoSquareInput">Input</label>
+                  <label for="doubleSquareInput">Input</label>
 
                   <input type="text"
                          class="form-control"
-                         id="twoSquareInput"
+                         id="doubleSquareInput"
                          name="input"
                          aria-describedby="Input">
                 </div>
 
                 <div class="form-group">
-                  <label for="twoSquareOutput">Output</label>
+                  <label for="doubleSquareOutput">Output</label>
 
                   <input type="text"
                          class="form-control"
-                         id="twoSquareOutput"
+                         id="doubleSquareOutput"
                          name="output"
                          aria-describedby="Output"
                          disabled>

@@ -96,18 +96,10 @@
       output.removeChild(output.lastChild);
     }
 
-    for (let i = 1; i < 12; i++) {
-      const div = document.createElement('div');
-      const result = form.name === 'affineForm'
-        ? getCryptographerOutput(
-          i,
-          form.input.value,
-          form.cipherMode.value,
-          encryptFunc,
-          decryptFunc,
-          i
-        )
-        : getCryptographerOutput(
+    if (form.name !== 'affineForm') {
+      for (let i = 1; i < ALPH_SIZE + 1; i++) {
+        const div = document.createElement('div');
+        const result = getCryptographerOutput(
           i,
           form.input.value,
           form.cipherMode.value,
@@ -115,8 +107,27 @@
           decryptFunc
         );
 
-      div.appendChild(document.createTextNode(`Key: ${i} - ${result ? result : 'This key can\'t be used for cipher method!'}`));
-      output.appendChild(div);
+        div.appendChild(document.createTextNode(`Key: ${i} - ${result ? result : 'This key can\'t be used for cipher method!'}`));
+        output.appendChild(div);
+      }
+    } else {
+      for (let i = 1; i < ALPH_SIZE + 1; i++) {
+        for (let j = 1; j < ALPH_SIZE + 1; j++) {
+          const div = document.createElement('div');
+
+          const result = getCryptographerOutput(
+            i,
+            form.input.value,
+            form.cipherMode.value,
+            encryptFunc,
+            decryptFunc,
+            j
+          );
+
+          div.appendChild(document.createTextNode(`${i}, ${j} - ${result ? result : 'This key can\'t be used for cipher method!'}`));
+          output.appendChild(div);
+        }
+      }
     }
   }
 
@@ -183,7 +194,9 @@
       );
     }
 
-    affineForm.key1.className += ' is-invalid';
+    if (multInverse == null) {
+      affineForm.key1.className += ' is-invalid';
+    }
   }
 
   function cryptographer(message, func) {

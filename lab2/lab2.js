@@ -107,7 +107,7 @@
       }
     }
 
-    return output.join('').replace(RegExp(PLAYFAIR_SYMBOL, 'g'), '');
+    return output.join('');
   }
 
   function doubleSquareCipher(cipherMode, message) {

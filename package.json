@@ -9,5 +9,8 @@
   "license": "MIT",
   "devDependencies": {
     "live-server": "^1.2.0"
+  },
+  "dependencies": {
+    "big.js": "^4.0.2"
   }
 }

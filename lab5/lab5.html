@@ -45,7 +45,7 @@
                  href="#collapseOne"
                  aria-expanded="false"
                  aria-controls="collapseOne">
-                Transposition cipher
+                RSA cipher
               </a>
             </h5>
           </div>
@@ -57,6 +57,100 @@
                data-parent="#accordion">
             <div class="card-body">
               <form name="rsaForm">
+                <div class="form-group">
+                  <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                      <input class="form-check-input"
+                             type="radio"
+                             name="cipherMode"
+                             value="encrypt"
+                             checked>
+                      Encrypt
+                    </label>
+                  </div>
+
+                  <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                      <input class="form-check-input"
+                             type="radio"
+                             name="cipherMode"
+                             value="decrypt">
+                      Decrypt
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="pInput">p</label>
+
+                  <input type="text"
+                         class="form-control"
+                         id="pInput"
+                         name="pInput"
+                         aria-describedby="p">
+                </div>
+
+                <div class="form-group">
+                  <label for="qInput">q</label>
+
+                  <input type="text"
+                         class="form-control"
+                         id="qInput"
+                         name="qInput"
+                         aria-describedby="q">
+                </div>
+
+                <div class="form-group">
+                  <label for="eInput">e</label>
+
+                  <input type="text"
+                         class="form-control"
+                         id="eInput"
+                         name="eInput"
+                         aria-describedby="e">
+                </div>
+
+                <div class="form-group">
+                  <label for="dInput">d</label>
+
+                  <input type="text"
+                         class="form-control"
+                         id="dInput"
+                         name="dInput"
+                         aria-describedby="d">
+                </div>
+
+                <div class="form-group">
+                  <label for="rsaInput">Input</label>
+
+                  <input type="text"
+                         class="form-control"
+                         id="rsaInput"
+                         name="input"
+                         aria-describedby="Input">
+                </div>
+
+                <div class="form-group">
+                  <label for="rsaOutput">Output</label>
+
+                  <input type="text"
+                         class="form-control"
+                         id="rsaOutput"
+                         name="output"
+                         aria-describedby="Output"
+                         disabled>
+                </div>
+
+                <div class="form-group">
+                  <label for="rsaOpenKey">Open Key</label>
+
+                  <input type="text"
+                         class="form-control"
+                         id="rsaOpenKey"
+                         name="rsaOpenKey"
+                         aria-describedby="Open Key">
+                </div>
+
                 <button type="button"
                         class="btn btn-primary"
                         name="submit">
@@ -81,7 +175,7 @@
             integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
             crossorigin="anonymous">
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script>
-    <script src="lab5.js" type="module"></script>
+    <script src='../node_modules/big.js/big.js'></script>
+    <script src="lab5.js"></script>
   </body>
 </html>

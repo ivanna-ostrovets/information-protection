@@ -1,5 +1,3 @@
-import findMultInverse from '../utils/find-mult-inverse.js';
-
 (function () {
   let rsaForm = document.rsaForm;
   const minKey = 1000;
@@ -24,7 +22,60 @@ import findMultInverse from '../utils/find-mult-inverse.js';
     }
 
     const e = temp;
-    const d = findMultInverse(e);
+    const d = findMultInverse(e, eiler);
+
+    rsaForm.pInput.value = p;
+    rsaForm.qInput.value = q;
+    rsaForm.dInput.value = d;
+    rsaForm.eInput.value = e;
+    rsaForm.input.value = 'Fus Ro Dah';
+
+    rsaForm.submit.addEventListener('click', () => {
+      rsaForm.output.value = rsaCipher(n, d, e);
+    });
+  }
+
+  function rsaCipher(n, e, d) {
+    return rsaForm.cipherMode.value === 'encrypt'
+      ? rsaCipherEncrypt(rsaForm.input.value, e, n)
+      : rsaCipherDencrypt(rsaForm.input.value, d, n);
+  }
+
+  function rsaCipherEncrypt(message, e, n) {
+    const output = [];
+    message = message.split('');
+
+    message.forEach(value => {
+      console.log();
+      output.push(expmod(value.charCodeAt(0), e, n));
+      output.push(' ');
+    });
+
+    return output.join('');
+  }
+
+  function rsaCipherDencrypt(message, d, n) {
+    const output = [];
+    message = message.toUpperCase().trim().split(' ').map(value => parseInt(value));
+
+    message.forEach(value => {
+      output.push(String.fromCharCode(expmod(value, d, n)));
+    });
+
+    return output.join('');
+  }
+
+  function expmod( base, exp, mod ){
+    if (!exp) {
+      return 1;
+    }
+
+    if (exp % 2 === 0){
+      return Math.pow(expmod(base, (exp / 2), mod), 2) % mod;
+    }
+    else {
+      return (base * expmod(base, (exp - 1), mod)) % mod;
+    }
   }
 
   function generatePrimeNumber(min, max) {
@@ -60,6 +111,20 @@ import findMultInverse from '../utils/find-mult-inverse.js';
     }
 
     return gsd(b, a % b);
+  }
+
+  function findMultInverse(number, module) {
+    let result = 1;
+
+    while ((number * result) % module !== 1) {
+      result += 1;
+
+      if (result > module) {
+        return null;
+      }
+    }
+
+    return result;
   }
 
   init();

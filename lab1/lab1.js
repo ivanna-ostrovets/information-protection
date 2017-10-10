@@ -1,3 +1,5 @@
+import findMultInverse from '../utils/find-mult-inverse.js';
+
 (function () {
   const ALPH = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   const ALPH_SIZE = ALPH.length;
@@ -20,8 +22,8 @@
         parseInt(additiveForm.key.value),
         additiveForm.input.value,
         additiveForm.cipherMode.value,
-        additive_cipher_encrypt,
-        additive_cipher_decrypt
+        additiveCipherEncrypt,
+        additiveCipherDecrypt
       );
 
       if (additiveForm.cipherMode.value === 'decrypt') {
@@ -30,8 +32,8 @@
         decryptWithoutKey(
           'outputListOne',
           additiveForm,
-          additive_cipher_encrypt,
-          additive_cipher_decrypt
+          additiveCipherEncrypt,
+          additiveCipherDecrypt
         );
       }
     });
@@ -43,8 +45,8 @@
         parseInt(multiplicativeForm.key.value),
         multiplicativeForm.input.value,
         multiplicativeForm.cipherMode.value,
-        multiplicative_cipher_encrypt,
-        multiplicative_cipher_decrypt
+        multiplicativeCipherEncrypt,
+        multiplicativeCipherDecrypt
       );
 
       multiplicativeForm.output.value = result ? result : '';
@@ -55,8 +57,8 @@
         decryptWithoutKey(
           'outputListTwo',
           multiplicativeForm,
-          multiplicative_cipher_encrypt,
-          multiplicative_cipher_decrypt
+          multiplicativeCipherEncrypt,
+          multiplicativeCipherDecrypt
         );
       }
     });
@@ -69,8 +71,8 @@
         parseInt(affineForm.key1.value),
         affineForm.input.value,
         affineForm.cipherMode.value,
-        affine_cipher_encrypt,
-        affine_cipher_decrypt,
+        affineCipherEncrypt,
+        affineCipherDecrypt,
         parseInt(affineForm.key2.value)
       );
 
@@ -82,8 +84,8 @@
         decryptWithoutKey(
           'outputListThree',
           affineForm,
-          affine_cipher_encrypt,
-          affine_cipher_decrypt
+          affineCipherEncrypt,
+          affineCipherDecrypt
         );
       }
     });
@@ -143,29 +145,29 @@
       : decryptFunc(key1, message);
   }
 
-  function additive_cipher_encrypt(key, message) {
+  function additiveCipherEncrypt(key, message) {
     return cryptographer(
       message,
       letter => ALPH[(ALPH.indexOf(letter) + key) % ALPH_SIZE]
     );
   }
 
-  function additive_cipher_decrypt(key, message) {
+  function additiveCipherDecrypt(key, message) {
     return cryptographer(
       message,
       letter => ALPH[(ALPH_SIZE + ALPH.indexOf(letter) - key) % ALPH_SIZE]
     );
   }
 
-  function multiplicative_cipher_encrypt(key, message) {
+  function multiplicativeCipherEncrypt(key, message) {
     return cryptographer(
       message,
       letter => ALPH[(ALPH.indexOf(letter) * key) % ALPH_SIZE]
     );
   }
 
-  function multiplicative_cipher_decrypt(key, message) {
-    const multInverse = find_mult_inverse(key);
+  function multiplicativeCipherDecrypt(key, message) {
+    const multInverse = findMultInverse(key, ALPH_SIZE);
 
     if (multInverse) {
       return cryptographer(
@@ -177,15 +179,15 @@
     multiplicativeForm.key.className += ' is-invalid';
   }
 
-  function affine_cipher_encrypt(key1, key2, message) {
+  function affineCipherEncrypt(key1, key2, message) {
     return cryptographer(
       message,
       letter => ALPH[(ALPH.indexOf(letter) * key1 + key2) % ALPH_SIZE]
     );
   }
 
-  function affine_cipher_decrypt(key1, key2, message) {
-    const multInverse = find_mult_inverse(key1);
+  function affineCipherDecrypt(key1, key2, message) {
+    const multInverse = findMultInverse(key1, ALPH_SIZE);
 
     if (multInverse) {
       return cryptographer(
@@ -203,20 +205,6 @@
     return message.split('')
       .map(letter => ALPH.indexOf(letter) > -1 ? func(letter) : letter)
       .join('');
-  }
-
-  function find_mult_inverse(number) {
-    let result = 1;
-
-    while ((number * result) % ALPH_SIZE !== 1) {
-      result += 1;
-
-      if (result > ALPH_SIZE) {
-        return null;
-      }
-    }
-
-    return result;
   }
 
   init();

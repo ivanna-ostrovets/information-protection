@@ -5,40 +5,66 @@
 
   function init() {
     const p = generatePrimeNumber(minKey, maxKey);
-    let temp = generatePrimeNumber(minKey, maxKey);
+    let q = generatePrimeNumber(minKey, maxKey);
 
-    while(temp === p) {
-      temp = generatePrimeNumber(minKey, maxKey);
+    while(q === p) {
+      q = generatePrimeNumber(minKey, maxKey);
     }
 
-    const q = temp;
     const n = p * q;
-    const eiler = (p - 1) * (q - 1);
+    const euler = (p - 1) * (q - 1);
 
-    temp = generateNumber(2, eiler - 1);
+    let e = euler;
 
-    while(!isCoprime(temp, eiler)) {
-      temp = generateNumber(2, eiler - 1);
+    while(!isCoprime(e, euler)) {
+      e = generateNumber(2, euler - 1);
     }
 
-    const e = temp;
-    const d = findMultInverse(e, eiler);
+    const d = findMultInverse(e, euler);
+    let input;
+    let inputFileType;
 
     rsaForm.pInput.value = p;
     rsaForm.qInput.value = q;
     rsaForm.dInput.value = d;
     rsaForm.eInput.value = e;
-    rsaForm.input.value = 'Fus Ro Dah';
+    rsaForm.rsaPublicKey.value = `${e}, ${n}`;
+    rsaForm.rsaPrivateKey.value = `${d}, ${n}`;
+
+    rsaForm.rsaInput.addEventListener('change', () => {
+      const reader = new FileReader();
+
+      reader.onload = function() {
+        input = reader.result;
+      }
+
+      reader.readAsText(rsaForm.rsaInput.files[0]);
+      inputFileType = rsaForm.rsaInput.files[0].type;
+    });
 
     rsaForm.submit.addEventListener('click', () => {
-      rsaForm.output.value = rsaCipher(n, d, e);
+      const textFile = null;
+
+      const makeTextFile = function (text) {
+        const data = new Blob([text], { type: inputFileType });
+
+        if (textFile !== null) {
+          window.URL.revokeObjectURL(textFile);
+        }
+
+        return window.URL.createObjectURL(data);
+      };
+
+      const downloadLink = document.querySelector('#downloadLink');
+      downloadLink.href = makeTextFile(rsaCipher(input, n, e, d));
+      downloadLink.click();
     });
   }
 
-  function rsaCipher(n, e, d) {
+  function rsaCipher(input, n, e, d) {
     return rsaForm.cipherMode.value === 'encrypt'
-      ? rsaCipherEncrypt(rsaForm.input.value, e, n)
-      : rsaCipherDencrypt(rsaForm.input.value, d, n);
+      ? rsaCipherEncrypt(input, e, n)
+      : rsaCipherDencrypt(input, d, n);
   }
 
   function rsaCipherEncrypt(message, e, n) {
@@ -56,7 +82,7 @@
 
   function rsaCipherDencrypt(message, d, n) {
     const output = [];
-    message = message.toUpperCase().trim().split(' ').map(value => parseInt(value));
+    message = message.trim().split(' ').map(value => parseInt(value));
 
     message.forEach(value => {
       output.push(String.fromCharCode(expmod(value, d, n)));
@@ -65,7 +91,7 @@
     return output.join('');
   }
 
-  function expmod( base, exp, mod ){
+  function expmod(base, exp, mod){
     if (!exp) {
       return 1;
     }

@@ -80,75 +80,79 @@
                   </div>
                 </div>
 
-                <div class="form-group">
-                  <label for="pInput">p</label>
+                <div class="row">
+                  <div class="form-group col-sm">
+                    <label for="pInput">p</label>
 
-                  <input type="text"
-                         class="form-control"
-                         id="pInput"
-                         name="pInput"
-                         aria-describedby="p">
+                    <input type="text"
+                           class="form-control"
+                           id="pInput"
+                           name="pInput"
+                           aria-describedby="p">
+                  </div>
+
+                  <div class="form-group col-sm">
+                    <label for="qInput">q</label>
+
+                    <input type="text"
+                           class="form-control"
+                           id="qInput"
+                           name="qInput"
+                           aria-describedby="q">
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="form-group col-sm">
+                    <label for="eInput">e</label>
+
+                    <input type="text"
+                           class="form-control"
+                           id="eInput"
+                           name="eInput"
+                           aria-describedby="e">
+                  </div>
+
+                  <div class="form-group col-sm">
+                    <label for="dInput">d</label>
+
+                    <input type="text"
+                           class="form-control"
+                           id="dInput"
+                           name="dInput"
+                           aria-describedby="d">
+                  </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="qInput">q</label>
+                  <label for="rsaPublicKey">Public Key (e, n)</label>
 
                   <input type="text"
+                         disabled
                          class="form-control"
-                         id="qInput"
-                         name="qInput"
-                         aria-describedby="q">
+                         id="rsaPublicKey"
+                         name="rsaPublicKey"
+                         aria-describedby="Public Key (e, n)">
                 </div>
 
                 <div class="form-group">
-                  <label for="eInput">e</label>
+                  <label for="rsaPrivateKey">Private Key (d, n)</label>
 
                   <input type="text"
+                         disabled
                          class="form-control"
-                         id="eInput"
-                         name="eInput"
-                         aria-describedby="e">
+                         id="rsaPrivateKey"
+                         name="rsaPrivateKey"
+                         aria-describedby="Private Key (d, n)">
                 </div>
 
                 <div class="form-group">
-                  <label for="dInput">d</label>
+                  <label for="rsaInput">Input file</label>
 
-                  <input type="text"
-                         class="form-control"
-                         id="dInput"
-                         name="dInput"
-                         aria-describedby="d">
-                </div>
-
-                <div class="form-group">
-                  <label for="rsaInput">Input</label>
-
-                  <input type="text"
-                         class="form-control"
-                         id="rsaInput"
-                         name="input"
-                         aria-describedby="Input">
-                </div>
-
-                <div class="form-group">
-                  <label for="rsaOutput">Output</label>
-
-                  <input type="text"
-                         class="form-control"
-                         id="rsaOutput"
-                         name="output"
-                         aria-describedby="Output"
-                         disabled>
-                </div>
-
-                <div class="form-group">
-                  <label for="rsaOpenKey">Open Key</label>
-
-                  <input type="text"
-                         class="form-control"
-                         id="rsaOpenKey"
-                         name="rsaOpenKey"
-                         aria-describedby="Open Key">
+                  <input type="file"
+                         name="rsaInput"
+                         class="form-control-file"
+                         id="rsaInput">
                 </div>
 
                 <button type="button"
@@ -156,6 +160,8 @@
                         name="submit">
                   Submit
                 </button>
+
+                <a download id="downloadLink"></a>
               </form>
             </div>
           </div>

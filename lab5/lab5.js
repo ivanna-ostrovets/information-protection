@@ -2,6 +2,7 @@
   let rsaForm = document.rsaForm;
   const minKey = 1000;
   const maxKey = 9999;
+  let n;
 
   function init() {
     const p = generatePrimeNumber(minKey, maxKey);
@@ -11,7 +12,7 @@
       q = generatePrimeNumber(minKey, maxKey);
     }
 
-    const n = p * q;
+    n = p * q;
     const euler = (p - 1) * (q - 1);
 
     let e = euler;
@@ -28,8 +29,26 @@
     rsaForm.qInput.value = q;
     rsaForm.dInput.value = d;
     rsaForm.eInput.value = e;
-    rsaForm.rsaPublicKey.value = `${e}, ${n}`;
-    rsaForm.rsaPrivateKey.value = `${d}, ${n}`;
+    rsaForm.rsaPublicKey_e.value = e;
+    rsaForm.rsaPublicKey_n.value = n;
+    rsaForm.rsaPrivateKey_d.value = d;
+    rsaForm.rsaPrivateKey_n.value = n;
+
+    rsaForm.rsaPublicKey_e.addEventListener('change', (event) => {
+      rsaForm.eInput.value = event.target.value;
+    });
+    rsaForm.rsaPublicKey_n.addEventListener('change', (event) => {
+      n = event.target.value;
+      rsaForm.rsaPrivateKey_n.value = event.target.value;
+    });
+
+    rsaForm.rsaPrivateKey_d.addEventListener('change', (event) => {
+      rsaForm.dInput.value = event.target.value;
+    });
+    rsaForm.rsaPrivateKey_n.addEventListener('change', (event) => {
+      n = event.target.value;
+      rsaForm.rsaPublicKey_n.value = event.target.value;
+    });
 
     rsaForm.rsaInput.addEventListener('change', () => {
       const reader = new FileReader();
@@ -56,7 +75,12 @@
       };
 
       const downloadLink = document.querySelector('#downloadLink');
-      downloadLink.href = makeTextFile(rsaCipher(input, n, e, d));
+      downloadLink.href = makeTextFile(rsaCipher(
+        input,
+        n,
+        rsaForm.eInput.value,
+        rsaForm.dInput.value,
+      ));
       downloadLink.click();
     });
   }
@@ -72,7 +96,6 @@
     message = message.split('');
 
     message.forEach(value => {
-      console.log();
       output.push(expmod(value.charCodeAt(0), e, n));
       output.push(' ');
     });

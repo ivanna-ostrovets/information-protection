@@ -45,7 +45,7 @@
                  href="#collapseOne"
                  aria-expanded="false"
                  aria-controls="collapseOne">
-                RSA cipher
+                Digital Signature
               </a>
             </h5>
           </div>
@@ -56,7 +56,7 @@
                aria-labelledby="headingOne"
                data-parent="#accordion">
             <div class="card-body">
-              <form name="rsaForm">
+              <form name="dsForm">
                 <div class="form-group">
                   <div class="form-check form-check-inline">
                     <label class="form-check-label">
@@ -92,81 +92,83 @@
                   </div>
 
                   <div class="form-group col-sm">
-                    <label for="qInput">q</label>
+                    <label for="gInput">g</label>
 
                     <input type="text"
                            class="form-control"
-                           id="qInput"
-                           name="qInput"
-                           aria-describedby="q">
+                           id="gInput"
+                           name="gInput"
+                           aria-describedby="g">
                   </div>
                 </div>
 
                 <div class="row">
                   <div class="form-group col-sm">
-                    <label for="eInput">e</label>
+                    <label for="xInput">x</label>
 
                     <input type="text"
                            class="form-control"
-                           id="eInput"
-                           name="eInput"
-                           aria-describedby="e">
+                           id="xInput"
+                           name="xInput"
+                           aria-describedby="x">
                   </div>
 
                   <div class="form-group col-sm">
-                    <label for="dInput">d</label>
+                    <label for="kInput">k</label>
 
                     <input type="text"
                            class="form-control"
-                           id="dInput"
-                           name="dInput"
-                           aria-describedby="d">
+                           id="kInput"
+                           name="kInput"
+                           aria-describedby="k">
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label>Public Key (e, n)</label>
+                  <label>y</label>
 
-                  <div class="d-flex justify-content-between">
-                    <input type="text"
-                           class="form-control col-sm"
-                           id="rsaPublicKey_e"
-                           name="rsaPublicKey_e"
-                           aria-describedby="Public Key (e)">
-
-                    <input type="text"
-                           class="form-control col-sm"
-                           id="rsaPublicKey_n"
-                           name="rsaPublicKey_n"
-                           aria-describedby="Public Key (n)">
-                  </div>
+                  <input type="text"
+                         class="form-control"
+                         id="yInput"
+                         name="yInput"
+                         aria-describedby="y">
                 </div>
 
                 <div class="form-group">
-                  <label>Private Key (d, n)</label>
-
-                  <div class="d-flex justify-content-between">
-                    <input type="text"
-                           class="form-control"
-                           id="rsaPrivateKey_d"
-                           name="rsaPrivateKey_d"
-                           aria-describedby="Private Key (d)">
-
-                    <input type="text"
-                           class="form-control"
-                           id="rsaPrivateKey_n"
-                           name="rsaPrivateKey_n"
-                           aria-describedby="Private Key (n)">
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="rsaInput">Input file</label>
+                  <label for="dsInput">Input file</label>
 
                   <input type="file"
-                         name="rsaInput"
+                         name="dsInput"
                          class="form-control-file"
-                         id="rsaInput">
+                         id="dsInput">
+                </div>
+
+                <div class="form-group">
+                  <label>Digital Signature (a, b)</label>
+
+                  <div class="d-flex justify-content-between">
+                    <input type="text"
+                           class="form-control"
+                           id="aInput"
+                           name="aInput"
+                           aria-describedby="Digital Signature (a)">
+
+                    <input type="text"
+                           class="form-control"
+                           id="bInput"
+                           name="bInput"
+                           aria-describedby="Digital Signature (b)">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="result">Result</label>
+
+                  <input type="text"
+                         class="form-control"
+                         id="result"
+                         name="result"
+                         aria-describedby="Result">
                 </div>
 
                 <button type="button"
@@ -197,6 +199,6 @@
     </script>
     <script src='../node_modules/big.js/big.js'></script>
     <script src="../utils.js"></script>
-    <script src="lab5.js"></script>
+    <script src="lab6.js"></script>
   </body>
 </html>

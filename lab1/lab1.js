@@ -1,5 +1,3 @@
-import findMultInverse from '../utils/find-mult-inverse.js';
-
 (function () {
   const ALPH = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   const ALPH_SIZE = ALPH.length;

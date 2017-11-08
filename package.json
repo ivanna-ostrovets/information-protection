@@ -11,6 +11,6 @@
     "live-server": "^1.2.0"
   },
   "dependencies": {
-    "big.js": "^4.0.2"
+    "blueimp-md5": "^2.10.0"
   }
 }

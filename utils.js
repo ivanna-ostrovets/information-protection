@@ -46,10 +46,6 @@ function gcd(a, b) {
   return gcd(b, a % b);
 }
 
-function extendedEuclideanAgorithm() {
-  
-}
-
 function findMultInverse(number, module) {
   let result = 1;
 

@@ -1,7 +1,8 @@
 (function () {
   const dsForm = document.dsForm;
-  const minKey = 1;
-  const maxKey = 9;
+  const minKey = Math.pow(2, 16);
+  const maxKey = minKey * 2;
+  let b;
 
   function init() {
     let input;
@@ -19,7 +20,6 @@
 
     let a = expmod(g, k, p);
     let y = expmod(g, x, p);
-    let b;
 
     dsForm.pInput.value = p;
     dsForm.gInput.value = g;
@@ -64,26 +64,27 @@
         input = reader.result;
 
         hash = hashCode(input);
-        b = find_b(x, a, k, hash, p);
-        dsForm.bInput.value = b;
-      }
+        console.log(hash);
+      };
 
       reader.readAsText(dsForm.dsInput.files[0]);
       inputFileType = dsForm.dsInput.files[0].type;
     });
 
     dsForm.submit.addEventListener('click', () => {
-      digitalSignature(input, inputFileType, y, a, b, p, g, hash);
+      digitalSignature(input, inputFileType, x, k, y, a, b, p, g, hash);
     });
   }
 
-  function digitalSignature(string, fileType, y, a, b, p, g, hash) {
+  function digitalSignature(string, fileType, x, k, y, a, b, p, g, hash) {
     return dsForm.cipherMode.value === 'encrypt'
-      ? sign(string, fileType, a, b)
+      ? sign(string, fileType, x, k, p, a, hash)
       : checkDigitalSignature(y, a, b, p, g, hash);
   }
 
-  function sign(text, fileType, a, b) {
+  function sign(text, fileType, x, k, p, a, hash) {
+    b = find_b(x, a, k, hash, p);
+    dsForm.bInput.value = b;
     const textFile = null;
 
     const makeTextFile = function (text) {
@@ -104,10 +105,12 @@
   function checkDigitalSignature(y, a, b, p, g, hash) {
     if ((expmod(y, a, p) * expmod(a, b, p)) % p === expmod(g, hash, p)) {
       dsForm.result.value = 'Digital signature is correct!';
-      dsForm.result.className += ' is-valid';
+      dsForm.result.classList.add("is-valid");
+      dsForm.result.classList.remove("is-invalid");
     } else {
       dsForm.result.value = 'Digital signature isn\'t correct!';
-      dsForm.result.className += ' is-invalid';
+      dsForm.result.classList.add("is-invalid");
+      dsForm.result.classList.remove("is-valid");
     }
   }
 
@@ -122,20 +125,8 @@
     return b;
   }
 
-  function hashCode(string) {
-    let hash = 0;
-
-    if (string.length === 0) {
-      return hash;
-    }
-
-    for (let i = 0; i < string.length; i++) {
-      const char = string.charCodeAt(i);
-
-      hash = ((hash << 5) - hash) + char;
-      hash = hash & hash;
-    }
-    return Math.abs(hash);
+  function hashCode(text) {
+    return parseInt(md5(text).substring(0, 4), 16);
   }
 
   init();

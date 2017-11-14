@@ -63,8 +63,16 @@
       reader.onload = function() {
         input = reader.result;
 
+        if (dsForm.cipherMode.value === 'decrypt') {
+          const signStart = input.lastIndexOf("{");
+          const sign = input.substring(signStart, input.lastIndexOf(" }"));
+          a = parseInt(sign.substring(sign.indexOf("=") + 1, sign.indexOf(",")));
+          b = parseInt(sign.substring(sign.lastIndexOf("=") + 1));
+
+          input = input.substring(0, signStart).substring(0, input.lastIndexOf(`\n`));
+        }
+
         hash = hashCode(input);
-        console.log(hash);
       };
 
       reader.readAsText(dsForm.dsInput.files[0]);
@@ -88,6 +96,7 @@
     const textFile = null;
 
     const makeTextFile = function (text) {
+      text = text + `\n{ a=${a}, b=${b} }`;
       const data = new Blob([text], { type: fileType });
 
       if (textFile !== null) {

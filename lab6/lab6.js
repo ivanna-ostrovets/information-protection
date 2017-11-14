@@ -109,6 +109,8 @@
     const downloadLink = document.querySelector('#downloadLink');
     downloadLink.href = makeTextFile(text);
     downloadLink.click();
+
+    dsForm.dsInput.value = null;
   }
 
   function checkDigitalSignature(y, a, b, p, g, hash) {
@@ -121,6 +123,8 @@
       dsForm.result.classList.add("is-invalid");
       dsForm.result.classList.remove("is-valid");
     }
+
+    dsForm.dsInput.value = null;
   }
 
   function find_b(x, a, k, hash, p) {
